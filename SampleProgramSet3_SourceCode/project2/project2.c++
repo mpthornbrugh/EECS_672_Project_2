@@ -7,8 +7,22 @@ void set3DViewingInformation(double xyz[6])
 {
 	ModelView::setMCRegionOfInterest(xyz);
 
-	cryph::AffPoint eye, center;
-	cryph::AffVector up;
+        double xmid = 0.5 * (xyz[0] + xyz[1]);
+        double ymid = 0.5 * (xyz[2] + xyz[3]);
+        double zmid = 0.5 * (xyz[4] + xyz[5]);
+        cryph::AffPoint center(xmid, ymid, zmid);
+        
+        double maxDelta = xyz[1] - xyz[0];
+        double delta = xyz[3] - xyz[2];
+        if (delta > maxDelta)
+            maxDelta = delta;
+        delta = xyz[5] - xyz[4];
+        if (delta > maxDelta)
+            maxDelta = delta;
+        double distEyeCenter = 2.0 * maxDelta;
+        cryph::AffPoint eye(xmid, ymid, zmid + distEyeCenter);
+        
+	cryph::AffVector up = cryph::AffVector::yu;
 
 	// Set values for eye-center-up to produce a reasonable off-axis
 	// view of your scene, then:
@@ -16,7 +30,9 @@ void set3DViewingInformation(double xyz[6])
 	// Notify the ModelView of our MC->EC viewing requests:
 	ModelView::setEyeCenterUp(eye, center, up);
 
-	double ecZpp, ecZmin, ecZmax;
+	double ecZpp = -(distEyeCenter - 0.5*maxDelta);
+        double ecZmin = ecZpp - maxDelta;
+        double ecZmax = ecZpp + 0.5*maxDelta;
 
 	// Set values for ecZpp, ecZmin, ecZmax that make sense in the context of
 	// the EC system established above, then:
@@ -28,7 +44,7 @@ void set3DViewingInformation(double xyz[6])
 
 int main(int argc, char* argv[])
 {
-	GLFWController c("GIVE ME A NICE TITLE", MVC_USE_DEPTH_BIT);
+	GLFWController c("Bedroom", MVC_USE_DEPTH_BIT);
 	c.reportVersions(std::cout);
 
 	// create your scene, adding things to the Controller....
