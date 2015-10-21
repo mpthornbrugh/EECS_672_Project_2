@@ -15,6 +15,17 @@ public:
 	void getMCBoundingBox(double* xyzLimitsF) const;
 	void render();
 private:
+	GLuint vao[1];
+	GLuint vbo[2]; // 0: coordinates; 1: normal vectors
+	GLuint ebo[3];
+
+	float xmin, xmax, ymin, ymax, zmin, zmax;
+
+	static GLuint indexList[3][4];
+
+	void defineBed(const cryph::AffPoint verts[]);
+	void renderBlock(float* color);
+	void updateXYZBounds(const cryph::AffPoint& p);
 };
 
 #endif

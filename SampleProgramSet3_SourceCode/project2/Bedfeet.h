@@ -15,6 +15,13 @@ public:
 	void getMCBoundingBox(double* xyzLimitsF) const;
 	void render();
 private:
+	GLuint vao[1];
+	GLuint vbo[2]; // 0: coordinates; 1: normal vectors
+
+	float radius;
+
+	void defineBedfeet();
+	void renderBedfeet(float* color);
 };
 
 #endif
