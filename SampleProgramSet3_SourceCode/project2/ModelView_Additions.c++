@@ -17,7 +17,12 @@ void ModelView::addToGlobalZoom(double increment)
 
 void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 {
-	std::cout << "You must implement ModelView::getMatrices in ModelView_Additions.c++\n";
+	//std::cout << "You must implement ModelView::getMatrices in ModelView_Additions.c++\n";
+
+	cryph::Matrix4x4 cryph::Matrix4x4::lookAt(
+	          const cryph::AffPoint& eye, const cryph::AffPoint& center,
+	          const cryph::AffVector& up)
+
 	// TODO:
 	// 1. Create the mc_ec matrix:
 	//    Create a local variable of type Matria4x4 calledx M_ECu from the eye,
@@ -55,6 +60,9 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 	// !!!!!   means!  (This is why I emphasized "WIDTHS" above.)                  !!!!!!
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	cryph::Matrix4x4 cryph::Matrix4x4::perspective(double ecZpp, double ecXmin, double ecXmax,
+		double ecYmin, double ecYmax, double ecZmin, double ecZmax);
 
 	/* The three ec_lds matrix generation choices:
 

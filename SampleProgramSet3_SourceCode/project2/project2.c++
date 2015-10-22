@@ -1,14 +1,20 @@
 // project2.c++: Starter for EECS 672 Project 2
 
 #include "GLFWController.h"
-#include "TEMPLATE_Subclass.h"
+#include "Bed.h"
+#include "Bedfeet.h"
+#include "Block.h"
+#include "Block.c++"
+#include "HalfCylinder.h"
 
 void addBookcase(Controller &c, const cryph::AffPoint& bottomFrontLeftPoint, float height, float width, float depth)
 {
 	//Making all shelf parts 1 inch thick
 
 	//Each shelf is 12 inches from the last thing -1 because there won't be any on the top
-	numShelves = (height/120) - 1;
+	int numShelves = (height/120.0) - 1;
+	
+	c.addModel(new Block(0.3, -0.4, 1.2, 0.3, 0.3, 0.4));
 
 	//Bottom of bookcase
 	c.addModel(new Block(bottomFrontLeftPoint.x + 10.0, bottomFrontLeftPoint.y, bottomFrontLeftPoint.z, width - 20.0, 10.0, depth - 10.0));
@@ -25,22 +31,22 @@ void addBookcase(Controller &c, const cryph::AffPoint& bottomFrontLeftPoint, flo
 	//Left of bookcase
 	c.addModel(new Block(bottomFrontLeftPoint.x, bottomFrontLeftPoint.y, bottomFrontLeftPoint.z, 10.0, height, depth - 10.0));
 
-	float shelfHeight = bottomFrontLeftPoint + 120;
+	float shelfHeight = bottomFrontLeftPoint.y + 120.0;
 
 	//Add the shelves
 	for (int i = 0; i < numShelves; i++) {
 		c.addModel(new Block(bottomFrontLeftPoint.x + 10.0, shelfHeight, bottomFrontLeftPoint.z, width - 20.0, 10.0, depth - 10.0));
-		shelfHeight += 120;
+		shelfHeight += 120.0;
 	}
 }
 
 // The position variable is either 1,2,3 or 4 for the direction that the fan blade is facing.
 void addFanblade(Controller &c, const cryph::AffPoint& connectionPoint, float width, float length, float depth, int position)
 {
-	float lengthConnector = length/5;
-	float middleSectionLength = 3*lengthConnector;
+	float lengthConnector = length/5.0;
+	float middleSectionLength = 3.0*lengthConnector;
 	float lengthCapPiece = lengthConnector;
-	float widthConnector = width/3;
+	float widthConnector = width/3.0;
 	if (position == 1) { //Go along x axis
 		
 	}
@@ -100,6 +106,8 @@ int main(int argc, char* argv[])
 	c.reportVersions(std::cout);
 
 	// create your scene, adding things to the Controller....
+	cryph::AffPoint p0(0.0,0.0,0.0);
+	addBookcase(c, p0, 400.0, 300.0, 100.0);
 
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 

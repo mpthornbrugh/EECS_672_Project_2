@@ -15,8 +15,7 @@ GLuint Block::indexList[3][4] = {
 	{ 1, 7, 3, 5 }  // ymax face
 };
 
-Block::Block(float cx, float cy, float cz, float lx, float ly, float lz) :
-	displayBlockEdges(false), displayBlockFill(true)
+Block::Block(float cx, float cy, float cz, float lx, float ly, float lz)
 {
 	xmin = cx; xmax = cx + lx;
 	ymin = cy; ymax = cy + ly;
