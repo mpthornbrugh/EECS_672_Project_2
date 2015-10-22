@@ -34,6 +34,27 @@ void addBookcase(Controller &c, const cryph::AffPoint& bottomFrontLeftPoint, flo
 	}
 }
 
+// The position variable is either 1,2,3 or 4 for the direction that the fan blade is facing.
+void addFanblade(Controller &c, const cryph::AffPoint& connectionPoint, float width, float length, float depth, int position)
+{
+	float lengthConnector = length/5;
+	float middleSectionLength = 3*lengthConnector;
+	float lengthCapPiece = lengthConnector;
+	float widthConnector = width/3;
+	if (position == 1) { //Go along x axis
+		
+	}
+	else if (position == 2) { //Go along z axis
+		
+	}
+	else if (position == 3) { //Go along -x axis
+		
+	}
+	else if (position == 4) { //Go along -z axis
+		
+	}
+}
+
 void set3DViewingInformation(double xyz[6])
 {
 	ModelView::setMCRegionOfInterest(xyz);
