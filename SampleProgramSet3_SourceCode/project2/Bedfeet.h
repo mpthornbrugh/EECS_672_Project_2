@@ -18,10 +18,9 @@ private:
 	GLuint vao[1];
 	GLuint vbo[2]; // 0: coordinates; 1: normal vectors
 
-	float radius;
+	float radius, xmin, xmax, ymin, ymax, zmin, zmax;
 
-	void defineBedfeet();
-	void renderBedfeet(float* color);
+	void renderBedfeet();
 };
 
 #endif

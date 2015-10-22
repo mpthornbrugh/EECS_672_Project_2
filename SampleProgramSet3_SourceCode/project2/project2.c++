@@ -3,6 +3,37 @@
 #include "GLFWController.h"
 #include "TEMPLATE_Subclass.h"
 
+void addBookcase(Controller &c, const cryph::AffPoint& bottomFrontLeftPoint, float height, float width, float depth)
+{
+	//Making all shelf parts 1 inch thick
+
+	//Each shelf is 12 inches from the last thing -1 because there won't be any on the top
+	numShelves = (height/120) - 1;
+
+	//Bottom of bookcase
+	c.addModel(new Block(bottomFrontLeftPoint.x + 10.0, bottomFrontLeftPoint.y, bottomFrontLeftPoint.z, width - 20.0, 10.0, depth - 10.0));
+
+	//Top of bookcase
+	c.addModel(new Block(bottomFrontLeftPoint.x - 10.0, bottomFrontLeftPoint.y + height - 10.0, bottomFrontLeftPoint.z, width - 20.0, 10.0, depth - 10.0));
+
+	//Back of bookcase
+	c.addModel(new Block(bottomFrontLeftPoint.x - 10.0, bottomFrontLeftPoint.y, bottomFrontLeftPoint.z, width - 20.0, height, 10.0));
+
+	//Right of bookcase
+	c.addModel(new Block(bottomFrontLeftPoint.x + width - 10.0, bottomFrontLeftPoint.y, bottomFrontLeftPoint.z, 10.0, height, depth - 10.0));
+
+	//Left of bookcase
+	c.addModel(new Block(bottomFrontLeftPoint.x, bottomFrontLeftPoint.y, bottomFrontLeftPoint.z, 10.0, height, depth - 10.0));
+
+	float shelfHeight = bottomFrontLeftPoint + 120;
+
+	//Add the shelves
+	for (int i = 0; i < numShelves; i++) {
+		c.addModel(new Block(bottomFrontLeftPoint.x + 10.0, shelfHeight, bottomFrontLeftPoint.z, width - 20.0, 10.0, depth - 10.0));
+		shelfHeight += 120;
+	}
+}
+
 void set3DViewingInformation(double xyz[6])
 {
 	ModelView::setMCRegionOfInterest(xyz);
