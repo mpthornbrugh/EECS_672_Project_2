@@ -10,7 +10,31 @@
 #include "Sphere.h"
 #include "Sphere.c++"
 
-void addFanCenter(Controller &c, const cryph::AffPoint& topMiddlePoint, float baseHeight, float baseWidth, float connectorHeight, float connectorWidth, float sphereRadius)
+void addBed(Controller &c, const cryph::AffPoint& headLeftBottomPoint, float bedWidth, float bedLength, float bedHeight, float feetHeight, float feetWidth)
+{
+	//Bed Mattress
+	c.addModel(new Block(headLeftBottomPoint.x, headLeftBottomPoint.y + feetHeight, headLeftBottomPoint.z, bedWidth, bedHeight, bedLength));
+
+	//All feet are 3 inches in from the x and z ways
+
+	//Head Left Foot
+	cryph::AffPoint p0(headLeftBottomPoint.x + 30.0, headLeftBottomPoint.y, headLeftBottomPoint.z + 30.0);
+	c.addModel(new Bedfeet(feetWidth, feetHeight, p0));
+
+	//Head Right Foot
+	p0.assign(headLeftBottomPoint.x + bedWidth - 30.0, headLeftBottomPoint.y, headLeftBottomPoint.z + 30.0);
+	c.addModel(new Bedfeet(feetWidth, feetHeight, p0));
+
+	//Foot Left Foot
+	p0.assign(headLeftBottomPoint.x + 30.0, headLeftBottomPoint.y, headLeftBottomPoint.z + bedLength - 30.0);
+	c.addModel(new Bedfeet(feetWidth, feetHeight, p0));
+
+	//Foot Right Foot
+	p0.assign(headLeftBottomPoint.x + bedWidth - 30.0, headLeftBottomPoint.y, headLeftBottomPoint.z + bedLength - 30.0);
+	c.addModel(new Bedfeet(feetWidth, feetHeight, p0));
+}
+
+void addFan(Controller &c, const cryph::AffPoint& topMiddlePoint, float baseHeight, float baseWidth, float connectorHeight, float connectorWidth, float sphereRadius)
 {
 
 }
@@ -147,11 +171,18 @@ int main(int argc, char* argv[])
 	c.reportVersions(std::cout);
 
 	// create your scene, adding things to the Controller....
-	cryph::AffPoint p0(0.0,0.0,0.0);
-	addBookcase(c, p0, 400.0, 500.0, 100.0);
+	cryph::AffPoint p0(1320.0,0.0,1320.0);
+	addBookcase(c, p0, 480.0, 480.0, 120.0);
 
-	p0.assign(600.0, 0.0, 0.0);
-	addBookcase(c, p0, 200.0, 300.0, 100.0);
+	p0.assign(720.0,0.0,1320.0);
+	addBookcase(c, p0, 720.0, 480.0, 120.0);
+
+	cryph::AffPoint p1(720.0, 0.0, 0.0);
+	addBed(c, p1, 600.0, 840.0, 240.0, 120.0, 40.0);
+
+	//addFan(Controller &c, const cryph::AffPoint& topMiddlePoint, float baseHeight, float baseWidth, float connectorHeight, float connectorWidth, float sphereRadius)
+	cryph::AffPoint p2(660.0,960.0,660.0);
+	addFan(c, p2, 120.0, 240.0, 120.0, 120.0, 180.0);
 
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 
