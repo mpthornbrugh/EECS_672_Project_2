@@ -68,13 +68,37 @@ void addFanblade(Controller &c, const cryph::AffPoint& connectionPoint, float wi
 		c.addModel(new HalfCylinder(width, depth, cylPoint, -90.0));
 	}
 	else if (position == 2) { //Go along z axis
-		
+		//Connector
+		c.addModel(new Block(connectionPoint.x - widthConnector/2.0, connectionPoint.y, connectionPoint.z, widthConnector, depth, lengthConnector));
+
+		//Middle Section
+		c.addModel(new Block(connectionPoint.x - width/2.0, connectionPoint.y, connectionPoint.z + lengthConnector, width, depth, middleSectionLength));
+
+		//Cap
+		cryph::AffPoint cylPoint (connectionPoint.x, connectionPoint.y, connectionPoint.z + lengthConnector + middleSectionLength);
+		c.addModel(new HalfCylinder(width, depth, cylPoint, 180.0));
 	}
 	else if (position == 3) { //Go along -x axis
-		
+		//Connector
+		c.addModel(new Block(connectionPoint.x - lengthConnector, connectionPoint.y, connectionPoint.z - widthConnector/2.0, lengthConnector, depth, widthConnector));
+
+		//Middle Section
+		c.addModel(new Block(connectionPoint.x - lengthConnector - middleSectionLength, connectionPoint.y, connectionPoint.z - width/2.0, middleSectionLength, depth, width));
+
+		//Cap
+		cryph::AffPoint cylPoint (connectionPoint.x - lengthConnector - middleSectionLength, connectionPoint.y, connectionPoint.z);
+		c.addModel(new HalfCylinder(width, depth, cylPoint, 90.0));
 	}
 	else if (position == 4) { //Go along -z axis
-		
+		//Connector
+		c.addModel(new Block(connectionPoint.x - widthConnector/2.0, connectionPoint.y, connectionPoint.z - lengthConnector, widthConnector, depth, lengthConnector));
+
+		//Middle Section
+		c.addModel(new Block(connectionPoint.x - width/2.0, connectionPoint.y, connectionPoint.z - middleSectionLength, width, depth, middleSectionLength));
+
+		//Cap
+		cryph::AffPoint cylPoint (connectionPoint.x, connectionPoint.y, connectionPoint.z - lengthConnector - middleSectionLength);
+		c.addModel(new HalfCylinder(width, depth, cylPoint, 0.0));
 	}
 }
 
