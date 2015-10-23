@@ -6,6 +6,7 @@
 #include "Block.h"
 #include "Block.c++"
 #include "HalfCylinder.h"
+#include "Sphere.h"
 
 void addFanCenter(Controller &c, const cryph::AffPoint& topMiddlePoint, float baseHeight, float baseWidth, float connectorHeight, float connectorWidth, float sphereRadius)
 {
