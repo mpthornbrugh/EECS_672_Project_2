@@ -17,11 +17,33 @@ void ModelView::addToGlobalZoom(double increment)
 
 void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 {
-	//std::cout << "You must implement ModelView::getMatrices in ModelView_Additions.c++\n";
+	
+	double xmin = ModelView::mcRegionOfInterest[0];
+	double xmax = ModelView::mcRegionOfInterest[1];
+	double ymin = ModelView::mcRegionOfInterest[2];
+	double ymax = ModelView::mcRegionOfInterest[3];
 
-	cryph::Matrix4x4 cryph::Matrix4x4::lookAt(
-	          const cryph::AffPoint& eye, const cryph::AffPoint& center,
-	          const cryph::AffVector& up)
+	float width = ModelView::mcRegionOfInterest[1] -ModelView::mcRegionOfInterest[0];
+	float height = ModelView::mcRegionOfInterest[3] - ModelView::mcRegionOfInterest[2];
+	float depth = ModelView::mcRegionOfInterest[5] - ModelView::mcRegionOfInterest[4];
+
+	float plaindiagonal = sqrt(height*height + width*width);
+	float diagonal = sqrt(plaindiagonal*plaindiagonal + depth*depth);
+	
+	float viewingRadius = diagonal/2;
+	
+	double distEyeCenter = 2.0 * diagonal;
+	
+	float zmin = -(distEyeCenter + viewingRadius);
+	float zmax = zmin + diagonal;
+	
+	float zpp = zmax;
+	
+	cryph::Matrix4x4 M_ECu = cryph::Matrix4x4::lookAt(ModelView::eye, ModelView::center, ModelView::up);
+	mc_ec = M_ECu;
+	
+	ec_lds = cryph::Matrix4x4::perspective( zpp,  -(xmax - xmin)/2, (xmax-xmin)/2,
+		-(ymax-ymin)/2,  (ymax-ymin)/2,  ecZmin,  ecZmax);
 
 	// TODO:
 	// 1. Create the mc_ec matrix:
@@ -60,9 +82,6 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 	// !!!!!   means!  (This is why I emphasized "WIDTHS" above.)                  !!!!!!
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-	cryph::Matrix4x4 cryph::Matrix4x4::perspective(double ecZpp, double ecXmin, double ecXmax,
-		double ecYmin, double ecYmax, double ecZmin, double ecZmax);
 
 	/* The three ec_lds matrix generation choices:
 

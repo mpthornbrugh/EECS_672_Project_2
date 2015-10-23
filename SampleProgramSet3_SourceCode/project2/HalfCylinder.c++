@@ -3,10 +3,11 @@
 #include "HalfCylinder.h"
 #include "ShaderIF.h"
 
-const int N_POINTS_AROUND_SLICE = 18; // number points around a cross-section
 HalfCylinder::HalfCylinder(float width, float height, const cryph::AffPoint& bottom_midpoint, float startAngle)
 {
 	radius = width/2;
+
+	int N_POINTS_AROUND_SLICE = 18;
 
 	xmin = bottom_midpoint.x - radius;
 	xmax = bottom_midpoint.x + radius;
@@ -62,6 +63,8 @@ void HalfCylinder::renderHalfCylinder()
 {
 	float color[] = { 0.0, 0.0, 0.0 };
 
+	int N_POINTS_AROUND_SLICE = 18;
+
 	typedef float vec3[3];
 	glUniform3fv(ppuLoc_kd, 1, color);
 	glBindVertexArray(vao[0]);
@@ -81,7 +84,7 @@ void HalfCylinder::render()
 	glUniformMatrix4fv(ppuLoc_ec_lds, 1, false, ec_lds.extractColMajor(mat));\
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	renderCylinder();
+	renderHalfCylinder();
 
 	glUseProgram(pgm);
 }

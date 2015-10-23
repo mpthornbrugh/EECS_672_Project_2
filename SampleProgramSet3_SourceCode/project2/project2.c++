@@ -1,12 +1,14 @@
 // project2.c++: Starter for EECS 672 Project 2
 
 #include "GLFWController.h"
-#include "Bed.h"
 #include "Bedfeet.h"
+#include "Bedfeet.c++"
 #include "Block.h"
 #include "Block.c++"
 #include "HalfCylinder.h"
+#include "HalfCylinder.c++"
 #include "Sphere.h"
+#include "Sphere.c++"
 
 void addFanCenter(Controller &c, const cryph::AffPoint& topMiddlePoint, float baseHeight, float baseWidth, float connectorHeight, float connectorWidth, float sphereRadius)
 {
@@ -19,17 +21,15 @@ void addBookcase(Controller &c, const cryph::AffPoint& bottomFrontLeftPoint, flo
 
 	//Each shelf is 12 inches from the last thing -1 because there won't be any on the top
 	int numShelves = (height/120.0) - 1;
-	
-	c.addModel(new Block(0.3, -0.4, 1.2, 0.3, 0.3, 0.4));
 
 	//Bottom of bookcase
 	c.addModel(new Block(bottomFrontLeftPoint.x + 10.0, bottomFrontLeftPoint.y, bottomFrontLeftPoint.z, width - 20.0, 10.0, depth - 10.0));
 
 	//Top of bookcase
-	c.addModel(new Block(bottomFrontLeftPoint.x - 10.0, bottomFrontLeftPoint.y + height - 10.0, bottomFrontLeftPoint.z, width - 20.0, 10.0, depth - 10.0));
+	c.addModel(new Block(bottomFrontLeftPoint.x + 10.0, bottomFrontLeftPoint.y + height - 10.0, bottomFrontLeftPoint.z, width - 20.0, 10.0, depth - 10.0));
 
 	//Back of bookcase
-	c.addModel(new Block(bottomFrontLeftPoint.x - 10.0, bottomFrontLeftPoint.y, bottomFrontLeftPoint.z, width - 20.0, height, 10.0));
+	c.addModel(new Block(bottomFrontLeftPoint.x, bottomFrontLeftPoint.y, bottomFrontLeftPoint.z, width, height, 10.0));
 
 	//Right of bookcase
 	c.addModel(new Block(bottomFrontLeftPoint.x + width - 10.0, bottomFrontLeftPoint.y, bottomFrontLeftPoint.z, 10.0, height, depth - 10.0));
@@ -148,7 +148,10 @@ int main(int argc, char* argv[])
 
 	// create your scene, adding things to the Controller....
 	cryph::AffPoint p0(0.0,0.0,0.0);
-	addBookcase(c, p0, 400.0, 300.0, 100.0);
+	addBookcase(c, p0, 400.0, 500.0, 100.0);
+
+	p0.assign(600.0, 0.0, 0.0);
+	addBookcase(c, p0, 200.0, 300.0, 100.0);
 
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 

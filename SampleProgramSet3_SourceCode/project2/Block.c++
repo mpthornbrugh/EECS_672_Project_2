@@ -15,7 +15,8 @@ GLuint Block::indexList[3][4] = {
 	{ 1, 7, 3, 5 }  // ymax face
 };
 
-Block::Block(float cx, float cy, float cz, float lx, float ly, float lz)
+Block::Block(float cx, float cy, float cz, float lx, float ly, float lz) :
+	displayBlockEdges(false), displayBlockFill(true)
 {
 	xmin = cx; xmax = cx + lx;
 	ymin = cy; ymax = cy + ly;
@@ -118,7 +119,7 @@ void Block::render()
 	float black[] = { 0.0, 0.0, 0.0 };
 	float bColor[] = { 0.7, 0.7, 0.0 };
 
-	if (displayBlockFill)
+	if (true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		renderBlock(bColor);
