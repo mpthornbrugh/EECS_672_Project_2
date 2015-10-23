@@ -7,6 +7,11 @@
 #include "Block.c++"
 #include "HalfCylinder.h"
 
+void addFanCenter(Controller &c, const cryph::AffPoint& topMiddlePoint, float baseHeight, float baseWidth, float connectorHeight, float connectorWidth, float sphereRadius)
+{
+
+}
+
 void addBookcase(Controller &c, const cryph::AffPoint& bottomFrontLeftPoint, float height, float width, float depth)
 {
 	//Making all shelf parts 1 inch thick
@@ -48,7 +53,18 @@ void addFanblade(Controller &c, const cryph::AffPoint& connectionPoint, float wi
 	float lengthCapPiece = lengthConnector;
 	float widthConnector = width/3.0;
 	if (position == 1) { //Go along x axis
-		
+		//Block (xlow, ylow, zlow, xLength, yLength, zLength)
+		//HalfCyl (width, height, bottom_midpoint, startAngle)
+
+		//Connector
+		c.addModel(new Block(connectionPoint.x, connectionPoint.y, connectionPoint.z - widthConnector/2.0, lengthConnector, depth, widthConnector));
+
+		//Middle Section
+		c.addModel(new Block(connectionPoint.x + lengthConnector, connectionPoint.y, connectionPoint.z - width/2.0, middleSectionLength, depth, width));
+
+		//Cap
+		cryph::AffPoint cylPoint (connectionPoint.x + lengthConnector + middleSectionLength, connectionPoint.y, connectionPoint.z);
+		c.addModel(new HalfCylinder(width, depth, cylPoint, -90.0));
 	}
 	else if (position == 2) { //Go along z axis
 		
