@@ -15,12 +15,15 @@ GLuint Block::indexList[3][4] = {
 	{ 1, 7, 3, 5 }  // ymax face
 };
 
-Block::Block(float cx, float cy, float cz, float lx, float ly, float lz) :
+Block::Block(float cx, float cy, float cz, float lx, float ly, float lz, float inColor[3]) :
 	displayBlockEdges(false), displayBlockFill(true)
 {
 	xmin = cx; xmax = cx + lx;
 	ymin = cy; ymax = cy + ly;
 	zmin = cz; zmax = cz + lz;
+	color[0] = inColor[0];
+	color[1] = inColor[1];
+	color[2] = inColor[2];
 	defineBlock();
 }
 
@@ -117,12 +120,12 @@ void Block::render()
 	glUniformMatrix4fv(ppuLoc_ec_lds, 1, false, ec_lds.extractColMajor(mat));
 
 	float black[] = { 0.0, 0.0, 0.0 };
-	float bColor[] = { 0.7, 0.7, 0.0 };
+	//float bColor[] = color;
 
 	if (true)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		renderBlock(bColor);
+		renderBlock(color);
 	}
 	if (displayBlockEdges)
 	{

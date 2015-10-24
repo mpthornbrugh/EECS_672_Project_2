@@ -1,26 +1,49 @@
 // Sphere.h
 
-#ifndef Sphere_H
-#define Sphere_H
+#ifndef SPHERE_H
+#define SPHERE_H
 
+#include <cmath>
+#include <iostream>
+#include <GL/gl.h>
+#include "ModelView.h"
 #include "ModelViewWithPhongLighting.h"
+
+#define NumTimesToSubdivide 5
+#define NumTriangles 4096
+#define NumVertices (3 * NumTriangles)
+
+typedef float vec3[3];
 
 class Sphere : public ModelViewWithPhongLighting
 {
-public:
-	Sphere(const cryph::AffPoint& midpoint, float radius);
-	virtual ~Sphere();
+ public:
+  Sphere( vec3 loc, float radius, float* color );
+  virtual ~Sphere();
+  
+  void tri( const vec3& veca,const vec3& vecb,const vec3& vecc,int& Index);
+  
+  void getMCBoundingBox( double* xyzLimitsF ) const;
+  void defineSphere();
+  void render();
+  void render(float* color);
 
-	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
-	void getMCBoundingBox(double* xyzLimitsF) const;
-	void render();
-private:
-	GLuint vao[1];
-	GLuint vbo[2]; // 0: coordinates; 1: normal vectors
+ private:
+  void tetrahedron( int count );
+  void divide_triangle( const vec3& a, const vec3& b, const vec3& c, int count );
+  
+  GLuint vao;
+  GLuint vbo[2];
 
-	float xmin, xmax, ymin, ymax, zmin, zmax;
-
-	void renderSphere();
+  double _limits[6];
+  int _Index;
+  
+  vec3 _points[NumVertices] ;//= {{0}};
+  vec3 _normals[NumVertices] ;//= {{0}};
+  
+  vec3 center;
+  float sphColor[3];
+  float sphR;
 };
 
 #endif

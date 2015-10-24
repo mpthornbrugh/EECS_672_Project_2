@@ -11,8 +11,10 @@ class Block : public ModelViewWithPhongLighting
 {
 public:
 	Block(float cx, float cy, float cz, // lower left corner
-	      float lx, float ly, float lz);// lengths in 3 directions
+	      float lx, float ly, float lz, float inColor[3]);// lengths in 3 directions
 	virtual ~Block();
+
+	float color[3];
 
 	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
 	void getMCBoundingBox(double* xyzLimits) const;

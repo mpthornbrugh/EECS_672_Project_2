@@ -31,3 +31,6 @@ ModelViewWithPhongLighting.o: ModelViewWithPhongLighting.h ModelViewWithPhongLig
 	$(CPP) $(C_FLAGS) ModelViewWithPhongLighting.c++
 TEMPLATE_Subclass.o: TEMPLATE_Subclass.h TEMPLATE_Subclass.c++
 	$(CPP) $(C_FLAGS) TEMPLATE_Subclass.c++
+
+clean: 
+	rm *.o project2
